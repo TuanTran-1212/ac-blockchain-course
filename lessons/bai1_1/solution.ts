@@ -8,9 +8,14 @@ export type Block = {
   current_hash: string;
 };
 
-// ✍️ TODO: Viết hàm tại đây
 export function isValidBlock(block: Block): boolean {
-  const value = block.index + block.timestamp + JSON.stringify(block.transactions) + block.previous_hash;
-  const expectedHash = crypto.createHash("sha256").update(value).digest("hex");
-  return block.current_hash === expectedHash;
+  const data =
+    block.index.toString() +
+    block.timestamp +
+    JSON.stringify(block.transactions) +
+    block.previous_hash;
+
+  const hash = crypto.createHash("sha256").update(data).digest("hex");
+
+  return hash === block.current_hash;
 }
